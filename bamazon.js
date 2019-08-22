@@ -16,7 +16,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err){
     if(err) throw err;
 
-    start();
+    showProducts();
 });
 
 function productInfo() {
@@ -56,11 +56,11 @@ function productInfo() {
                 if(quantity2 <= productRes.stock_quantity){
                     console.log("Your product is in stock!!");
 
-                    var updateInventory = "UPDATE products SET stock_quantity = " + (productRes.stock_quantity - quantity2) + "WHERE itme_id = " + item2;
+                    var updateInventory = "UPDATE products SET stock_quantity = " + (productRes.stock_quantity - quantity2) + "WHERE item_id = " + item2;
 
                     connection.query(updateInventory, function(err,data) {
                         if (err) throw err;
-                        console.log('Your was placed, the total balance is $' + productRes.price * quantity2);
+                        console.log('Your order was placed, the total balance is $' + productRes.price * quantity2);
                         console.log("Thanks for your purchase");
                         console.log("\n-------------------------------\n");
                         
@@ -76,7 +76,7 @@ function productInfo() {
 
 
 
-function start(){
+function showProducts(){
     connection.query("SELECT * FROM products", function(err,res){
         for(var i = 0; i < res.length; i++) {
             console.log('\nItem ID: ' + res[i].item_id + " | " + 'Product Name: ' + res[i].product_name + " | " + "Department: " + res[i].department_name + " | " + "price: " + res[i].price.toString() + " | " + "Stock Quantity" + res[i].stock_quantity.toString());
@@ -84,5 +84,23 @@ function start(){
         console.log("-------------------------");
        
         productInfo();
+    });
+}
+
+function keepShopping(){
+    inquirer.prompt([
+        {
+            type: "confirm",
+            message: "would you like to keep shopping?",
+            name: "confirm"
+        }
+    ]).then(function(res){
+        if(res.confirm){
+            console.log("----------------");
+            showProducts();
+        } else{
+            console.log("Thanks for shopping with us!");
+            connection.end();
+        }
     })
 }
