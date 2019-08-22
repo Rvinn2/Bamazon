@@ -7,9 +7,9 @@ USE bamazon_DB;
 CREATE TABLE products(
 item_id INT NOT NULL AUTO_INCREMENT,
 product_name VARCHAR(100) NOT NULL,
-department_name VARCHAR(50)NOT NULL,
-price INT default 0,
-stock_quantity INT default 0,
+department_name VARCHAR(100)NOT NULL,
+price DECIMAL(10,2) NOT NULL,
+stock_quantity INT NOT NULL,
 PRIMARY KEY (item_id)
 );
 
@@ -45,3 +45,4 @@ VALUES (12323, "7 Pack Dry Erase Markers", "Office", "7.99", 24);
 
 Insert INTO products (item_id, product_name, deparment_name, price, stock_quantity)
 VALUES (12321, "Organic Protein", "Health", "28.23", 10);
+
