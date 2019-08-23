@@ -49,7 +49,7 @@ function productInfo() {
 
                     if (response.length === 0) {
                         console.log("You must select a valid product ID from the Product list.");
-                        showAllProducts();
+                        showProducts();
                     } else {
                         // IF THE PRODUCTS ARE IN STOCK________
                         var productRes = response[0];
